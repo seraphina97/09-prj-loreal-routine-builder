@@ -36,6 +36,15 @@ body {
   margin-bottom: 10px;
 }
 
+#productSearch {
+  flex: 8;
+  margin-right: 12px;
+  padding: 16px;
+  font-size: 18px;
+  border: 2px solid #000;
+  border-radius: 8px;
+}
+
 /* category filter */
 .search-section {
   margin: 30px 0;
@@ -43,7 +52,6 @@ body {
 }
 
 .search-section select {
-  width: 100%;
   padding: 16px;
   font-size: 18px;
   border: 2px solid #000;
@@ -72,13 +80,15 @@ body {
 }
 
 .chat-window {
-  padding: 20px;
-  font-size: 18px;
+  max-height: 400px; /* or any height you want */
+  overflow-y: auto; /* enables vertical scrolling */
+  padding: 1em;
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 1em;
+  font-size: 1rem;
   line-height: 1.5;
-  height: 250px;
-  overflow-y: auto;
-  background: #fafafa;
-  margin-bottom: 20px;
+  word-break: break-word; /* prevents long words from overflowing */
 }
 
 /* placeholder message */
@@ -288,4 +298,61 @@ body {
   color: #fff;
   background: #d32f2f;
   border-radius: 50%;
+}
+
+/* RTL support: flip layout when dir="rtl" is set on html or body */
+html[dir="rtl"],
+body[dir="rtl"] {
+  direction: rtl;
+}
+
+html[dir="rtl"] .page-wrapper,
+body[dir="rtl"] .page-wrapper {
+  text-align: right;
+}
+
+html[dir="rtl"] .search-section,
+body[dir="rtl"] .search-section {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .products-grid,
+body[dir="rtl"] .products-grid {
+  direction: rtl;
+}
+
+html[dir="rtl"] .product-card,
+body[dir="rtl"] .product-card {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+html[dir="rtl"] .selected-products,
+body[dir="rtl"] .selected-products {
+  text-align: right;
+}
+
+html[dir="rtl"] #selectedProductsList,
+body[dir="rtl"] #selectedProductsList {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .selected-product-item,
+body[dir="rtl"] .selected-product-item {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .chatbox,
+body[dir="rtl"] .chatbox {
+  text-align: right;
+}
+
+html[dir="rtl"] .chat-form,
+body[dir="rtl"] .chat-form {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .chat-window,
+body[dir="rtl"] .chat-window {
+  text-align: right;
 }

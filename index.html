@@ -23,8 +23,13 @@
         <h1 class="site-title">Smart Routine &amp; Product Advisor</h1>
       </header>
 
-      <!-- Category Filter -->
+      <!-- Search Field + Category Filter -->
       <div class="search-section">
+        <input
+          id="productSearch"
+          type="text"
+          placeholder="Search products by name or keyword…"
+        />
         <select id="categoryFilter">
           <option value="" disabled selected>Choose a Category</option>
           <option value="cleanser">Cleansers</option>
@@ -86,7 +91,14 @@
     </div>
 
     <!-- secrets.js can be removed when using Cloudflare Workers for API requests -->
-    <script src="secrets.js"></script>
+    <script>
+      // Detect RTL language (basic check for Arabic, Hebrew, Persian, Urdu, etc.)
+      const rtlLangs = ["ar", "he", "fa", "ur"];
+      const userLang = (navigator.language || "").split("-")[0];
+      if (rtlLangs.includes(userLang)) {
+        document.documentElement.setAttribute("dir", "rtl");
+      }
+    </script>
     <script src="script.js"></script>
   </body>
 </html>

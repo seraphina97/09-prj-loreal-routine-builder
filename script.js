@@ -8,8 +8,14 @@ const selectedProductsList = document.getElementById("selectedProductsList");
 /* Get reference to the Generate Routine button */
 const generateRoutineBtn = document.getElementById("generateRoutine");
 
+/* Get reference to the search input */
+const productSearch = document.getElementById("productSearch");
+
 /* Store selected products in an array */
 let selectedProducts = [];
+
+/* Store all loaded products for filtering */
+let allProducts = [];
 
 /* Helper: Save selected products to localStorage */
 function saveSelectedProducts() {
@@ -172,6 +178,59 @@ categoryFilter.addEventListener("change", async (e) => {
   displayProducts(filteredProducts);
 });
 
+/* Helper: Filter products by category and search term */
+function getFilteredProducts() {
+  // Get current category and search value
+  const selectedCategory = categoryFilter.value;
+  const searchValue = productSearch.value.trim().toLowerCase();
+
+  // Start with all products
+  let filtered = allProducts;
+
+  // Filter by category if selected
+  if (selectedCategory) {
+    filtered = filtered.filter(
+      (product) => product.category === selectedCategory
+    );
+  }
+
+  // Filter by search term if entered
+  if (searchValue) {
+    filtered = filtered.filter((product) => {
+      // Search in name, brand, and description
+      return (
+        product.name.toLowerCase().includes(searchValue) ||
+        product.brand.toLowerCase().includes(searchValue) ||
+        product.description.toLowerCase().includes(searchValue)
+      );
+    });
+  }
+
+  return filtered;
+}
+
+/* Update the product grid based on filters */
+function updateProductGrid() {
+  const filteredProducts = getFilteredProducts();
+  displayProducts(filteredProducts);
+}
+
+/* Load all products on page load */
+async function initProducts() {
+  allProducts = await loadProducts();
+  updateProductGrid();
+}
+
+/* Listen for changes in category filter */
+categoryFilter.addEventListener("change", () => {
+  updateProductGrid();
+});
+
+/* Listen for input in search field */
+productSearch.addEventListener("input", () => {
+  updateProductGrid();
+});
+
 /* Store the chat conversation history */
 let chatHistory = [
   {
@@ -223,19 +282,21 @@ ${productData
 
   try {
     // Call OpenAI API using fetch and async/await
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${openai_api_key}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-4o",
-        messages: chatHistory,
-        max_tokens: 400,
-        temperature: 0.7,
-      }),
-    });
+    const response = await fetch(
+      "https://loreal-prj8.drewlynntaylor.workers.dev/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "gpt-4o",
+          messages: chatHistory,
+          max_tokens: 400,
+          temperature: 0.7,
+        }),
+      }
+    );
 
     const data = await response.json();
 
@@ -278,19 +339,21 @@ chatForm.addEventListener("submit", async (e) => {
 
   try {
     // Call OpenAI API with full chat history
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${openai_api_key}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-4o",
-        messages: chatHistory,
-        max_tokens: 400,
-        temperature: 0.7,
-      }),
-    });
+    const response = await fetch(
+      "https://loreal-prj8.drewlynntaylor.workers.dev/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "gpt-4o",
+          messages: chatHistory,
+          max_tokens: 400,
+          temperature: 0.7,
+        }),
+      }
+    );
 
     const data = await response.json();
 
@@ -324,6 +387,7 @@ chatForm.addEventListener("submit", async (e) => {
   document.getElementById("userInput").value = "";
 });
 
-/* On page load, restore selected products from localStorage */
+/* On page load, restore selected products and load products */
 loadSelectedProducts();
 updateSelectedProductsList();
+initProducts();
