@@ -190,12 +190,14 @@ body {
 
 .product-card {
   flex: 0 1 calc(33.333% - 14px);
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   padding: 15px;
   border-radius: 4px;
   display: flex;
-  gap: 15px;
-  min-height: 160px;
+  flex-direction: column; /* stack image on top, info below */
+  gap: 10px;
+  min-height: 260px; /* increased height for more space */
+  align-items: center;
 }
 
 .product-card img {
@@ -203,14 +205,16 @@ body {
   height: 110px;
   object-fit: contain;
   flex-shrink: 0;
+  margin-bottom: 10px;
 }
 
 .product-card .product-info {
-  flex: 1;
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-height: 110px;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 0;
 }
 
 .product-card h3 {
@@ -218,16 +222,32 @@ body {
   margin-bottom: 8px;
 }
 
+.product-card h4 {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+  font-weight: normal; 
+  text-decoration: underline
+}
+
 .product-card p {
   font-size: 14px;
   color: #666;
+  margin-bottom: 6px;
+  word-break: break-word;
+}
+
+.product-card .product-info p:last-child {
+  flex: 1 1 auto;
+  margin-bottom: 0;
+  /* allow description to fill remaining space */
 }
 
 /* selected products */
 .selected-products {
   margin: 40px 0;
   padding: 20px;
-  border: 2px solid #000;
+  border: 4px solid #000;
   border-radius: 8px;
 }
 
@@ -266,9 +286,9 @@ body {
 
 /* Highlight selected product cards */
 .product-card.selected {
-  border: 2px solid #0072ce;
-  box-shadow: 0 0 8px #0072ce33;
-  background: #f0f8ff;
+  border: 2px solid #ff003b;
+  box-shadow: 0 0 8px #cb000033;
+  background: #ff003c84;
 }
 
 /* Selected Products List */
@@ -276,7 +296,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #f7f7fa;
+  background: #e3a535;
   border-radius: 4px;
   padding: 6px 10px;
   margin-bottom: 6px;
@@ -286,7 +306,7 @@ body {
 .selected-product-item .remove-btn {
   background: none;
   border: none;
-  color: #d32f2f;
+  color: #000000;
   font-size: 1.3em;
   cursor: pointer;
   margin-left: 10px;
@@ -298,6 +318,21 @@ body {
   color: #fff;
   background: #d32f2f;
   border-radius: 50%;
+}
+
+.user-message {
+  background-color: #ff003b;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.ai-message {
+  background-color: #e3a535;
+  color: #000000;
+  padding: 10px;
+  border-radius: 8px;
 }
 
 /* RTL support: flip layout when dir="rtl" is set on html or body */

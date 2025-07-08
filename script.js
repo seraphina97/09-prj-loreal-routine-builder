@@ -63,7 +63,7 @@ function displayProducts(products) {
       <img src="${product.image}" alt="${product.name}">
       <div class="product-info">
         <h3>${product.name}</h3>
-        <p>${product.brand}</p>
+        <h4>${product.brand}</h4>
         <p>${product.description}</p>
       </div>
     </div>
@@ -389,5 +389,7 @@ chatForm.addEventListener("submit", async (e) => {
 
 /* On page load, restore selected products and load products */
 loadSelectedProducts();
+updateSelectedProductsList();
+initProducts();
 updateSelectedProductsList();
 initProducts();
